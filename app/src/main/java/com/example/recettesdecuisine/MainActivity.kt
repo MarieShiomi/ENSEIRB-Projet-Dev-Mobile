@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recettesdecuisine.adapter.CategoryAdapter
 import com.example.recettesdecuisine.databinding.ActivityMainBinding
 import com.example.recettesdecuisine.formatdonnee.CategoryResponse
+import com.example.recettesdecuisine.listener.OnItemClickListener
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                         runOnUiThread {
                             circularProgressIndicator.visibility = View.GONE
                             categoriesAdapter = CategoryAdapter(it1)
+                            categoriesAdapter.setClickListener(onCLicked)
                             recyclerView.adapter = categoriesAdapter
                             recyclerView.layoutManager = LinearLayoutManager(applicationContext)
                         }
@@ -67,5 +69,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+    private val onCLicked  = object : OnItemClickListener {
+        override fun onClick(categoryName: String) {
+            var intent = Intent(this@MainActivity, Internet_Failure::class.java).apply {
+
+            }
+            intent.putExtra("categoryName", categoryName)
+            startActivity(intent)
+        }
     }
 }
