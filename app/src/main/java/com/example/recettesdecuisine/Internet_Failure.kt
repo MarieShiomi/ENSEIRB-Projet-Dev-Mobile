@@ -15,7 +15,7 @@ class Internet_Failure : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_internet_failure)
         button = findViewById(R.id.button_id)
-        button.text = intent.getStringExtra("categoryName")
+        button.text = intent.getStringExtra("mealName")
         button.setOnClickListener{
             var a = Intent(this, MainActivity::class.java).apply {
             }
