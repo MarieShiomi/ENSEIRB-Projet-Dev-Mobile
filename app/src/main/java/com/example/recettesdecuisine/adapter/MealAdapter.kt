@@ -33,7 +33,7 @@ class MealAdapter (private val meals: List<Meal>) : RecyclerView.Adapter<MealVie
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         holder.mealName.text = meals[position].name
         holder.itemView.setOnClickListener {
-            meals[position].name?.let { it1 -> listener!!.onClick(it1) }
+            meals[position].id?.let { it1 -> listener!!.onClick(it1.toString()) }
         }
         ImageLoader.loader(meals[position].thumb, holder.mealImage)
 

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("OKHTTP", e.localizedMessage)
+               Log.e("OKHTTP", e.localizedMessage)
                 circularProgressIndicator.visibility = View.GONE
               startActivity(internetFailure)
             }

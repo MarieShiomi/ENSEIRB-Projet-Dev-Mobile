@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recettesdecuisine.adapter.CategoryAdapter
 import com.example.recettesdecuisine.adapter.MealAdapter
 import com.example.recettesdecuisine.databinding.ActivityMainBinding
+import com.example.recettesdecuisine.databinding.ActivityMealBinding
 import com.example.recettesdecuisine.formatdonnee.CategoryResponse
 import com.example.recettesdecuisine.formatdonnee.MealResponse
 import com.example.recettesdecuisine.listener.OnItemClickListener
@@ -21,7 +22,7 @@ import java.net.URL
 
 class MealActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMealBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var mealsAdapter: MealAdapter
     private lateinit var circularProgressIndicator: CircularProgressIndicator
@@ -29,11 +30,11 @@ class MealActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val categoryName = intent.getStringExtra("categoryName").toString()
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
         recyclerView = binding.recyclerView
         //setContentView(R.layout.activity_main)
-        circularProgressIndicator = binding.circularProgressIndicator
+        circularProgressIndicator = binding.circularProgressIndicatorMeal
         val url = URL("https://www.themealdb.com/api/json/v1/1/filter.php?c=$categoryName")
 
         val request = Request.Builder()
@@ -73,11 +74,12 @@ class MealActivity : AppCompatActivity() {
         })
     }
     private val onCLicked  = object : OnItemClickListener {
-        override fun onClick(mealName: String) {
-            var intent = Intent(this@MealActivity, Internet_Failure::class.java).apply {
+        override fun onClick(mealid: String) {
+            var intent = Intent(this@MealActivity, DetailActivity::class.java).apply {
 
             }
-            intent.putExtra("mealName", mealName)
+            intent.putExtra("mealid", mealid)
+            Log.d("test",mealid)
             startActivity(intent)
         }
     }
