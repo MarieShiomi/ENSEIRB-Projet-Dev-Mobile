@@ -1,25 +1,24 @@
 package com.example.recettesdecuisine
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.recettesdecuisine.adapter.MealAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.recettesdecuisine.adapter.PrerequisiteAdapter
 import com.example.recettesdecuisine.databinding.ActivityDetailBinding
-import com.example.recettesdecuisine.databinding.ActivityMainBinding
-import com.example.recettesdecuisine.databinding.ActivityMealBinding
 import com.example.recettesdecuisine.formatdonnee.DetailResponse
-import com.example.recettesdecuisine.formatdonnee.MealResponse
+import com.example.recettesdecuisine.formatdonnee.PrerequisiteResponse
 import com.example.recettesdecuisine.loader.ImageLoader
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 import java.net.URL
+
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -28,6 +27,8 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var detailArea : TextView
     private lateinit var detailInstruction : TextView
     private lateinit var detailImage : ImageView
+    private  lateinit var recyclerView: RecyclerView
+    private lateinit var prerequisiteAdapter: PrerequisiteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,8 @@ class DetailActivity : AppCompatActivity() {
         detailImage = binding.detailImage
         detailName = binding.detailName
         detailInstruction = binding.detailInstruction
+        recyclerView = binding.recyclerView
+        detailInstruction.movementMethod = ScrollingMovementMethod()
 //        circularProgressIndicator = binding.circularProgressIndicator
 
         val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealid")
@@ -62,10 +65,26 @@ class DetailActivity : AppCompatActivity() {
                 response.body?.string()?.let {
                     val gson = Gson()
                     val detailsResponse = gson.fromJson(it, DetailResponse::class.java)
-                    detailArea.text = detailsResponse.meals?.get(0)?.area
-                    detailName.text = detailsResponse.meals?.get(0)?.name
-                    detailInstruction.text = detailsResponse.meals?.get(0)?.instruction
-                    ImageLoader.loader(detailsResponse.meals?.get(0)?.thumb, detailImage)
+                    detailsResponse.meals?.get(0).let { it1 ->
+                        runOnUiThread{
+                            detailArea.text = it1?.area
+                            detailName.text = it1?.name
+                            detailInstruction.text = it1?.instruction
+                            ImageLoader.loader(it1?.thumb, detailImage)
+
+                        }
+
+                    }
+                    val prerequisiteResponse = PrerequisiteResponse(detailsResponse)
+                    prerequisiteResponse.fill()
+                    prerequisiteResponse.prerequisites?.let { it2 ->
+                        runOnUiThread{
+                            prerequisiteAdapter =  PrerequisiteAdapter(it2)
+                            recyclerView.adapter = prerequisiteAdapter
+                            recyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
+                        }
+
+                    }
                     /*detailsResponse.?. let { it1 ->
                         runOnUiThread {
                             circularProgressIndicator.visibility = View.GONE

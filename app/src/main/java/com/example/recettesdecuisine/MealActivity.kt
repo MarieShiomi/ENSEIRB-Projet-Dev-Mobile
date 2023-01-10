@@ -7,11 +7,8 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recettesdecuisine.adapter.CategoryAdapter
 import com.example.recettesdecuisine.adapter.MealAdapter
-import com.example.recettesdecuisine.databinding.ActivityMainBinding
 import com.example.recettesdecuisine.databinding.ActivityMealBinding
-import com.example.recettesdecuisine.formatdonnee.CategoryResponse
 import com.example.recettesdecuisine.formatdonnee.MealResponse
 import com.example.recettesdecuisine.listener.OnItemClickListener
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -79,7 +76,6 @@ class MealActivity : AppCompatActivity() {
 
             }
             intent.putExtra("mealid", mealid)
-            Log.d("test",mealid)
             startActivity(intent)
         }
     }
