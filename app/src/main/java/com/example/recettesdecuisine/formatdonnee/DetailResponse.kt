@@ -9,6 +9,9 @@ class DetailResponse{
 
 class Detail {
 
+    @SerializedName("idMeal")
+    var id : String? = null
+
     @SerializedName("strMeal")
     var name : String? = null
 
