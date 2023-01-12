@@ -18,6 +18,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:background="#FFB74D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category_image"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="TextView"
+        android:background="#FFE0B2"
         app:layout_constraintBottom_toBottomOf="@+id/category_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category_image"

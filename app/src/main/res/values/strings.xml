@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Recettes de cuisine</string>
+    <color name="app_color">#EF6C00</color>
 </resources>

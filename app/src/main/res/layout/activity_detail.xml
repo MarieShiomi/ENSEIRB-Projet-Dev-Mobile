@@ -51,6 +51,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/app_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detail_image"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,8 +62,10 @@
         <TextView
             android:id="@+id/detail_area"
             android:layout_width="0dp"
+            android:textSize="20dp"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textColor="#E65100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detail_image"
             app:layout_constraintTop_toBottomOf="@+id/detail_name" />
