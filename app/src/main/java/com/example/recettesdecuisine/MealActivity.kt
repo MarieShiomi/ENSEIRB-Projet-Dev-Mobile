@@ -71,11 +71,11 @@ class MealActivity : AppCompatActivity() {
         })
     }
     private val onCLicked  = object : OnItemClickListener {
-        override fun onClick(mealid: String) {
+        override fun onClick(mealId: String) {
             var intent = Intent(this@MealActivity, DetailActivity::class.java).apply {
 
             }
-            intent.putExtra("mealid", mealid)
+            intent.putExtra("mealId", mealId)
             startActivity(intent)
         }
     }

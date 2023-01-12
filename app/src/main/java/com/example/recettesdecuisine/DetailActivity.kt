@@ -22,7 +22,7 @@ import java.net.URL
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-//    private lateinit var circularProgressIndicator: CircularProgressIndicator
+//  private lateinit var circularProgressIndicator: CircularProgressIndicator
     private lateinit var detailName: TextView
     private lateinit var detailArea : TextView
     private lateinit var detailInstruction : TextView
@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val mealid = intent.getStringExtra("mealid").toString()
+        val mealId = intent.getStringExtra("mealId").toString()
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         detailArea = binding.detailArea
@@ -43,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
         detailInstruction.movementMethod = ScrollingMovementMethod()
 //        circularProgressIndicator = binding.circularProgressIndicator
 
-        val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealid")
+        val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
         val request = Request.Builder()
             .url(url)
             .build()
@@ -66,22 +66,19 @@ class DetailActivity : AppCompatActivity() {
                     val gson = Gson()
                     val detailsResponse = gson.fromJson(it, DetailResponse::class.java)
                     detailsResponse.meals?.get(0).let { it1 ->
-                        runOnUiThread{
-                            detailArea.text = it1?.area
-                            detailName.text = it1?.name
-                            detailInstruction.text = it1?.instruction
-                            ImageLoader.loader(it1?.thumb, detailImage)
+                        val prerequisiteResponse = PrerequisiteResponse(detailsResponse)
+                        prerequisiteResponse.fill()
+                        prerequisiteResponse.prerequisites?.let { it2 ->
+                            runOnUiThread {
+                                detailArea.text = it1?.area
+                                detailName.text = it1?.name
+                                detailInstruction.text = it1?.instruction
+                                ImageLoader.loader(it1?.thumb, detailImage)
+                                prerequisiteAdapter =  PrerequisiteAdapter(it2)
+                                recyclerView.adapter = prerequisiteAdapter
+                                recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
+                            }
 
-                        }
-
-                    }
-                    val prerequisiteResponse = PrerequisiteResponse(detailsResponse)
-                    prerequisiteResponse.fill()
-                    prerequisiteResponse.prerequisites?.let { it2 ->
-                        runOnUiThread{
-                            prerequisiteAdapter =  PrerequisiteAdapter(it2)
-                            recyclerView.adapter = prerequisiteAdapter
-                            recyclerView.layoutManager = GridLayoutManager(applicationContext, 3)
                         }
 
                     }
