@@ -31,15 +31,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         app:backgroundTint="#EF6C00"
-        app:srcCompat="?android:attr/actionModeWebSearchDrawable"
+        app:srcCompat="@drawable/random_foreground"
         android:contentDescription="@string/fab_transformation_sheet_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        app:maxImageSize="56dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,11 +2,10 @@ package com.example.recettesdecuisine
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
-import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recettesdecuisine.adapter.PrerequisiteAdapter
@@ -14,21 +13,27 @@ import com.example.recettesdecuisine.databinding.ActivityDetailBinding
 import com.example.recettesdecuisine.formatdonnee.DetailResponse
 import com.example.recettesdecuisine.formatdonnee.PrerequisiteResponse
 import com.example.recettesdecuisine.loader.ImageLoader
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.youtube.player.YouTubeBaseActivity
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerView
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 import java.net.URL
 
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity :  YouTubeBaseActivity() {
     private lateinit var binding: ActivityDetailBinding
-//  private lateinit var circularProgressIndicator: CircularProgressIndicator
+    private lateinit var circularProgressIndicator: CircularProgressIndicator
     private lateinit var detailName: TextView
     private lateinit var detailArea : TextView
     private lateinit var detailInstruction : TextView
     private lateinit var detailImage : ImageView
     private  lateinit var recyclerView: RecyclerView
     private lateinit var prerequisiteAdapter: PrerequisiteAdapter
+    private  lateinit var youtubePlayer: YouTubePlayerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,24 +45,23 @@ class DetailActivity : AppCompatActivity() {
         detailName = binding.detailName
         detailInstruction = binding.detailInstruction
         recyclerView = binding.recyclerView
-        detailInstruction.movementMethod = ScrollingMovementMethod()
-//        circularProgressIndicator = binding.circularProgressIndicator
-
+        youtubePlayer = binding.ytPlayer
+        circularProgressIndicator = binding.circularProgressIndicatorDetail
+        val apiKey =  "AIzaSyDsloD9t_mGEN2-BjMmiDl_H01ltbprMg0"
         val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
         val request = Request.Builder()
             .url(url)
             .build()
 
         val client = OkHttpClient()
-        val internetFailure = Intent(this, Internet_Failure::class.java).apply {
+        val internetFailure = Intent(this, InternetFailure::class.java).apply {
 
         }
-//        circularProgressIndicator.visibility = View.VISIBLE
+        circularProgressIndicator.visibility = View.VISIBLE
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("OKHTTP", e.localizedMessage)
-//                circularProgressIndicator.visibility = View.GONE
+                circularProgressIndicator.visibility = View.GONE
                 startActivity(internetFailure)
             }
 
@@ -70,6 +74,7 @@ class DetailActivity : AppCompatActivity() {
                         prerequisiteResponse.fill()
                         prerequisiteResponse.prerequisites?.let { it2 ->
                             runOnUiThread {
+                                circularProgressIndicator.visibility = View.GONE
                                 detailArea.text = it1?.area
                                 detailName.text = it1?.name
                                 detailInstruction.text = it1?.instruction
@@ -77,21 +82,31 @@ class DetailActivity : AppCompatActivity() {
                                 prerequisiteAdapter =  PrerequisiteAdapter(it2)
                                 recyclerView.adapter = prerequisiteAdapter
                                 recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
+                                val videoId = it1?.youtube.toString().split("https://www.youtube.com/watch?v=")[1]
+                                youtubePlayer.initialize(apiKey, object : YouTubePlayer.OnInitializedListener{
+                                    override fun onInitializationSuccess(
+                                        provider: YouTubePlayer.Provider?,
+                                    player: YouTubePlayer?,
+                                    p2: Boolean
+                                    ) {
+                                        player?.loadVideo(videoId)
+                                        player?.play()
+                                        }
+
+                                    override fun onInitializationFailure(
+                                        p0: YouTubePlayer.Provider?,
+                                    p1: YouTubeInitializationResult?
+                                    ) {
+                                        Toast.makeText(this@DetailActivity , "Video player Failed" , Toast.LENGTH_SHORT).show()
+                                        }
+                                    })
                             }
 
                         }
 
                     }
-                    /*detailsResponse.?. let { it1 ->
-                        runOnUiThread {
-                            circularProgressIndicator.visibility = View.GONE
-                        }*/
-//
-//                    }
-//                    Log.d("OKHTTP", "Got " + mealsResponse.meals?.count() + " results")
                 }
             }
         })
-        //setContentView(R.layout.activity_detail)
     }
 }

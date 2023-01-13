@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recettesdecuisine.R
-import com.example.recettesdecuisine.formatdonnee.Category
 import com.example.recettesdecuisine.formatdonnee.Meal
 import com.example.recettesdecuisine.listener.OnItemClickListener
 import com.example.recettesdecuisine.loader.ImageLoader
@@ -20,7 +19,7 @@ class MealViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 
 class MealAdapter (private val meals: List<Meal>) : RecyclerView.Adapter<MealViewHolder>() {
-    var listener: OnItemClickListener? = null
+    private var listener: OnItemClickListener? = null
 
     fun setClickListener(listener1: OnItemClickListener){
         listener = listener1

@@ -13,14 +13,14 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/default_saddle"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/prerequisite_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/prerequisite_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

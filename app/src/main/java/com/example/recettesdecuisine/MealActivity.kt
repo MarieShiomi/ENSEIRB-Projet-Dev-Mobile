@@ -3,7 +3,6 @@ package com.example.recettesdecuisine
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +29,6 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
         recyclerView = binding.recyclerView
-        //setContentView(R.layout.activity_main)
         circularProgressIndicator = binding.circularProgressIndicatorMeal
         val url = URL("https://www.themealdb.com/api/json/v1/1/filter.php?c=$categoryName")
 
@@ -39,14 +37,13 @@ class MealActivity : AppCompatActivity() {
             .build()
 
         val client = OkHttpClient()
-        val internetFailure = Intent(this, Internet_Failure::class.java).apply {
+        val internetFailure = Intent(this, InternetFailure::class.java).apply {
 
         }
         circularProgressIndicator.visibility = View.VISIBLE
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("OKHTTP", e.localizedMessage)
                 circularProgressIndicator.visibility = View.GONE
                 startActivity(internetFailure)
             }
@@ -65,14 +62,13 @@ class MealActivity : AppCompatActivity() {
                         }
 
                     }
-                    Log.d("OKHTTP", "Got " + mealsResponse.meals?.count() + " results")
                 }
             }
         })
     }
     private val onCLicked  = object : OnItemClickListener {
         override fun onClick(mealId: String) {
-            var intent = Intent(this@MealActivity, DetailActivity::class.java).apply {
+            val intent = Intent(this@MealActivity, DetailActivity::class.java).apply {
 
             }
             intent.putExtra("mealId", mealId)

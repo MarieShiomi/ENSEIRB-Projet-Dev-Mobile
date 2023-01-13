@@ -11,13 +11,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:maxWidth="100dp"
+        android:maxHeight="100dp"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/category_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textStyle="bold"
         android:textAlignment="center"
         android:background="#FFB74D"
@@ -29,8 +30,8 @@
         android:id="@+id/category_desc"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="TextView"
         android:background="#FFE0B2"
+        android:scrollbars = "vertical"
         app:layout_constraintBottom_toBottomOf="@+id/category_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category_image"
@@ -40,7 +41,6 @@
         android:id="@+id/space"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=" "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category_desc"

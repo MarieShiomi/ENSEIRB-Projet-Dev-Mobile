@@ -1,5 +1,4 @@
 package com.example.recettesdecuisine.adapter
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,7 @@ class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 
 class CategoryAdapter(private val categories: List<Category>) : RecyclerView.Adapter<CategoryViewHolder>() {
-    var listener: OnItemClickListener? = null
+    private var listener: OnItemClickListener? = null
 
     fun setClickListener(listener1: OnItemClickListener){
         listener = listener1

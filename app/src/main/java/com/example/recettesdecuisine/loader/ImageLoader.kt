@@ -6,9 +6,7 @@ import android.os.Looper
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import android.os.Handler
-import android.view.View
 import android.widget.ImageView
-import java.util.BitSet
 
 class ImageLoader {
 

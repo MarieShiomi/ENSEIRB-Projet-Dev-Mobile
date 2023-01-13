@@ -1,9 +1,6 @@
 package com.example.recettesdecuisine.formatdonnee
 
-import android.util.Log
-import com.example.recettesdecuisine.adapter.PrerequisiteAdapter
-
-class PrerequisiteResponse(var details: DetailResponse) {
+class PrerequisiteResponse(private var details: DetailResponse) {
     var prerequisites : MutableList<Prerequisite>? = mutableListOf()
 
     fun fill() {
@@ -22,7 +19,7 @@ class PrerequisiteResponse(var details: DetailResponse) {
     }
 }
 
-class Prerequisite() {
+class Prerequisite {
 
     var ingredient : String? = null
 
