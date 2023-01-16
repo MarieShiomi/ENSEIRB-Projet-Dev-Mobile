@@ -47,7 +47,7 @@ class DetailActivity :  YouTubeBaseActivity() {
         recyclerView = binding.recyclerView
         youtubePlayer = binding.ytPlayer
         circularProgressIndicator = binding.circularProgressIndicatorDetail
-        val apiKey = "temporary"
+        val apiKey = "AIzaSyDsloD9t_mGEN2-BjMmiDl_H01ltbprMg0"
         val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
         val request = Request.Builder()
             .url(url)
